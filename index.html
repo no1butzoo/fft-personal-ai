@@ -3,56 +3,349 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page</title>
+    <title>FFT Personal AI & Machine Learning</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --primary: #00ffcc;
+            --bg-dark: #0a0a0f;
+            --bg-card: #15151e;
+            --text-main: #f0f0f5;
+            --text-muted: #888899;
+            --accent: #ff0055;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Hero Section */
         header {
-            background: #007bff;
-            color: #fff;
-            padding: 20px 0;
+            padding: 100px 20px;
             text-align: center;
+            background: linear-gradient(180deg, rgba(0,255,204,0.1) 0%, var(--bg-dark) 100%);
         }
+
         h1 {
-            margin: 0;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
         }
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
+
+        p.subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px auto;
         }
-        footer {
+
+        .cta-button {
+            background-color: var(--primary);
+            color: var(--bg-dark);
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background-color: white;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        /* Countdown */
+        .countdown {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .time-box {
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: 8px;
+            min-width: 90px;
             text-align: center;
-            padding: 20px 0;
-            background: #333;
-            color: white;
-            position: absolute;
-            width: 100%;
-            bottom: 0;
+            border: 1px solid #222;
         }
+
+        .time-box span {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        /* Syllabus & Preview Matrix */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        @media(max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .syllabus-list {
+            list-style: none;
+        }
+
+        .syllabus-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Interactive Preview */
+        .preview-box {
+            background: #000;
+            border-radius: 5px;
+            padding: 20px;
+            font-family: monospace;
+            color: #0f0;
+            height: 250px;
+            overflow-y: auto;
+        }
+
+        /* FAQ Accordion */
+        .faq-item {
+            background: var(--bg-card);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .faq-question:hover {
+            color: var(--primary);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        /* Chatbot Widget */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: var(--bg-card);
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .chat-header {
+            background: var(--primary);
+            color: var(--bg-dark);
+            padding: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .chat-body {
+            height: 250px;
+            padding: 10px;
+            overflow-y: auto;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-input {
+            display: none;
+            padding: 10px;
+            border-top: 1px solid #333;
+        }
+
+        .chat-input input {
+            width: 100%;
+            padding: 8px;
+            background: var(--bg-dark);
+            border: 1px solid #444;
+            color: white;
+            border-radius: 4px;
+        }
+
+        .bot-msg { background: #222; padding: 8px; border-radius: 5px; font-size: 0.9rem;}
+        .user-msg { background: var(--primary); color: var(--bg-dark); padding: 8px; border-radius: 5px; align-self: flex-end; font-size: 0.9rem;}
+
     </style>
 </head>
 <body>
+
     <header>
-        <h1>Welcome to Our Landing Page</h1>
+        <h1>FFT Personal AI & Machine Learning</h1>
+        <p class="subtitle">Master the underlying patterns of intelligence. Build your own predictive models and bridge the gap to the Facts are Foes ecosystem.</p>
+        <a href="emergent://facts-are-foes" class="cta-button">Connect to Facts are Foes App</a>
+        
+        <div class="countdown" id="countdown">
+            <div class="time-box"><span id="days">00</span>Days</div>
+            <div class="time-box"><span id="hours">00</span>Hours</div>
+            <div class="time-box"><span id="minutes">00</span>Minutes</div>
+            <div class="time-box"><span id="seconds">00</span>Seconds</div>
+        </div>
     </header>
+
     <div class="container">
-        <h2>Your One-Stop Solution</h2>
-        <p>This is a simple landing page template for you to start building your own landing page.</p>
-        <button id="cta-button">Learn More</button>
+        <div class="grid-2">
+            <div class="card">
+                <h2>Course Syllabus</h2>
+                <ul class="syllabus-list">
+                    <li><span>Module 1: The Observer's Framework</span> <span>Week 1</span></li>
+                    <li><span>Module 2: Fast Fourier Transforms in AI</span> <span>Week 2</span></li>
+                    <li><span>Module 3: Neural Networking Fundamentals</span> <span>Week 3</span></li>
+                    <li><span>Module 4: Emergent System Integration</span> <span>Week 4</span></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Terminal Preview</h2>
+                <div class="preview-box" id="terminal">
+                    > Initializing FFT environment...<br>
+                    > Loading model weights...<br>
+                    > Connection to emergent established.<br>
+                </div>
+                <button onclick="runPreview()" style="margin-top: 15px; padding: 8px 15px; background: transparent; color: var(--primary); border: 1px solid var(--primary); cursor:pointer;">Run Test Sequence</button>
+            </div>
+        </div>
+
+        <h2 style="margin-bottom: 20px; color: var(--primary); text-align: center;">Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">How does this link to Facts are Foes? <span>+</span></div>
+            <div class="faq-answer"><p style="padding: 15px 0;">This course provides the foundational machine learning API keys required to unlock advanced analytics within the Facts are Foes emergent environment.</p></div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">Do I need prior coding experience? <span>+</span></div>
+            <div class="faq-answer"><p style="padding: 15px 0;">We start from first principles. If you can observe patterns, you can learn to code them.</p></div>
+        </div>
     </div>
-    <footer>
-        <p>&copy; 2026 Your Company. All rights reserved.</p>
-    </footer>
+
+    <div class="chatbot-container">
+        <div class="chat-header" onclick="toggleChat()">
+            Ask the AI Assistant <span>^</span>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="bot-msg">System ready. Do you have questions regarding the FFT pipeline or emergent integration?</div>
+        </div>
+        <div class="chat-input" id="chatInput">
+            <input type="text" id="userInput" placeholder="Type a message..." onkeypress="handleChat(event)">
+        </div>
+    </div>
+
     <script>
-        document.getElementById('cta-button').addEventListener('click', function() {
-            alert('You clicked the button!');
-        });
+        // --- Countdown Logic ---
+        // Setting launch date 14 days from now
+        const launchDate = new Date().getTime() + (14 * 24 * 60 * 60 * 1000); 
+
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+
+            document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+        }, 1000);
+
+        // --- FAQ Accordion Logic ---
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const sign = element.querySelector('span');
+            if (answer.style.maxHeight) {
+                answer.style.maxHeight = null;
+                sign.innerText = '+';
+            } else {
+                answer.style.maxHeight = answer.scrollHeight + "px";
+                sign.innerText = '-';
+            }
+        }
+
+        // --- Terminal Preview Logic ---
+        function runPreview() {
+            const terminal = document.getElementById('terminal');
+            terminal.innerHTML += "> Compiling target logic...<br>> Analyzing variables...<br>> Facts are Foes sync: SUCCESS.<br>";
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        // --- Chatbot Logic ---
+        let chatOpen = false;
+        function toggleChat() {
+            chatOpen = !chatOpen;
+            document.getElementById('chatBody').style.display = chatOpen ? 'flex' : 'none';
+            document.getElementById('chatInput').style.display = chatOpen ? 'block' : 'none';
+        }
+
+        function handleChat(e) {
+            if (e.key === 'Enter') {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (text) {
+                    const chatBody = document.getElementById('chatBody');
+                    chatBody.innerHTML += `<div class="user-msg">${text}</div>`;
+                    input.value = '';
+                    
+                    setTimeout(() => {
+                        chatBody.innerHTML += `<div class="bot-msg">Logged. This query will be routed to the emergent network for processing.</div>`;
+                        chatBody.scrollTop = chatBody.scrollHeight;
+                    }, 1000);
+                }
+            }
+        }
     </script>
 </body>
 </html>
